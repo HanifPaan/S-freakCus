@@ -3,4 +3,4 @@ SF custom server usage
 
 ## Tools
 
-- [exim-queue-guard](exim-queue-guard/) - limits the Exim spool size and removes mail stuck too long, with auto-update
+- [mailnager](mailnager/) - limits the Exim spool size and removes mail stuck too long, with auto-update ([notes](mailnager/notes/))
