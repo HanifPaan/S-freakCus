@@ -1,6 +1,0 @@
-Run as root:
-
-curl -fsSL https://raw.githubusercontent.com/HanifPaan/S-freakCus/main/threat_watch/install.sh | bash -s <cpanel-user>
-Done. It picks settings for your server automatically and runs every hour.
-
-Already installed? Running the same command again is safe. Your settings are kept.
