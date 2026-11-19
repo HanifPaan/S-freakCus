@@ -1,8 +1,0 @@
-# threat_watch - SCANNER user-agent rules
-#
-# Format: <rule_name> <regex>, matched case-insensitively against the User-Agent.
-# Checked after attack and scanner (URL) rules.
-
-scan_tool           (?:zgrab|masscan|nmap|nikto|sqlmap|nuclei|wpscan|joomscan|dirbuster|gobuster|ffuf|feroxbuster|acunetix|netsparker|nessus|openvas|whatweb|httpx|l9explore|fuzz)
-http_library        ^(?:python-requests|python-urllib|python-httpx|aiohttp|go-http-client|okhttp|java/|apache-httpclient|libwww-perl|curl/|wget/|axios|node-fetch|guzzlehttp|php/)
-empty_ua            ^-?$
