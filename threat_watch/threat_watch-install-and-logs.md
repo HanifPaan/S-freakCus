@@ -5,7 +5,7 @@
 Run as root on the server:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/HanifPaan/S-freakCus/main/threat_watch/install.sh | bash -s intellia
+curl -fsSL https://raw.githubusercontent.com/HanifPaan/S-freakCus/main/threat_watch/install.sh | bash -s <cpusename>
 ```
 
 - Replace `intellia` with the cPanel user to watch. List several users with spaces: `bash -s user1 user2`.
