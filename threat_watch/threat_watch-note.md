@@ -130,10 +130,4 @@ Uses Imunify360 if present, otherwise CSF, otherwise ipset. Bans expire after 7 
 
 ---
 
-## Releasing a new version (Hanif)
-
-1. Change `VERSION="x.y.z"` at the top of `threat_watch.sh`.
-2. GitHub → Releases → **Draft a new release** → tag `threat_watch-vx.y.z`.
-3. Attach `threat_watch.sh`, `threat_watch.conf` and `setup.sh`, then **Publish**.
-
 Servers update on Sunday, or right away with `threat_watch update`. Settings are never overwritten, and old versions are kept for rollback.
