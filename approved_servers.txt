@@ -4,3 +4,4 @@
 # MODE: ban | watch | off  (switch for all servers)
 MODE ban
 d61c7998347c4d67f3d4f196ed522abd6f1098334bc5834f2aea48130e6e2f2a server2
+d61c7998347c4d67f3d4f196ed522abd6f1098334bc5834f2aea48130e6e2f2a server2
