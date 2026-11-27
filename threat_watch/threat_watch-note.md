@@ -11,7 +11,7 @@ As root:
 curl -fsSL https://raw.githubusercontent.com/HanifPaan/S-freakCus/main/threat_watch/install.sh | bash -s <cpanel_user>
 ```
 - Several users: `bash -s user1 user2`
-- All users: install with no user, then set `SCOPE="all"` in the settings file.
+- All users: install with no user. New installs check all sites (`SCOPE="all"`).
 
 | Path | What |
 |---|---|
@@ -114,7 +114,7 @@ threat_watch guard enable
   ```
 
 ### Switch mode
-Guard starts in **watch** mode, which only reports and never bans.
+New installs start in **ban** mode once guard is enabled and the server is licensed. Watch mode only reports and never bans. You can also switch it in the Console (Settings → Guard → Mode).
 
 | Want | Command |
 |---|---|
@@ -128,6 +128,7 @@ Changes take effect within 1 minute. Switching mode or turning guard off does **
 ```bash
 threat_watch guard unban <IP>
 ```
+If kicks is installed, this also removes the IP from kicks. `kicks unban <IP>` does the same the other way round.
 
 ### Watch guard live
 ```bash
@@ -226,21 +227,32 @@ It asks for a username (Enter = `admin`) and shows the password **once**. Then o
 
 Only IPs added with `gui-allow` can sign in, even when the port is open.
 
-**On the page:**
-- Search by IP or site, filter by rule or ban type (long / 1-hour strike), and choose rows per page (25, 50, 100, 250, All).
-- Click a row to see what that IP tried and the result.
-- **Release** on a row removes that ban right away and clears the IP's strikes, after asking you to confirm. Every release is logged with who did it.
-- The copy buttons copy only the rows matching the filters.
+**Layout:** the menu on the left is always the same.
 
-**Settings tab:**
-- Sections: Mode, Rules, What it checks, Ban lengths and strikes, Range ban, Ban limits, Never-ban IPs (with names), Telegram alerts (choose what is sent, quiet hours, test message), 3-hourly report, Version and updates.
+| Menu | What |
+|---|---|
+| **Guard → Bans** | active bans, search, filters, rows per page, details per row, guard log |
+| **Guard → Ban an IP** | ban an IP or a `/24` for a chosen time, with a note (office and never-ban IPs are refused) |
+| **Guard → Test a request** | paste a URL to see which guard rule would catch it (nothing is banned) |
+| **kicks → DoS / DDoS** | kicks flood bans, and what it would ban in watch mode |
+| **kicks → scrapperReaper** | kicks scraper / bad bot bans, and what it would ban in watch mode |
+| **Updates** (bottom) | newest release and notes for threat_watch and kicks, **Update now**, auto-update on/off |
+| **Settings** (bottom) | all settings, grouped General / Guard / kicks / System |
+
+The **?** next to Guard and kicks shows a short note on what each tool does.
+
+**Release** (on any ban, guard or kicks) removes the IP from both tools and clears its strikes. Every release is logged with who did it.
+
+**Settings:**
+- **General:** Never-ban IPs (with names, used by guard and kicks), What guard checks, Report.
+- **Guard:** Mode, Rules, Ban lengths, Range ban, Ban limits.
+- **kicks:** Mode & parts, What kicks checks (all sites / some users / some domains), DoS limits, scrapperReaper, Auto-ban on load.
+- **System:** History (with Undo), Export / Import / Reset all.
 - A changed field turns yellow and shows its old value. Nothing is saved until you press **Save**, which asks for your password again.
-- **Default** on a section fills in the default values (you still press Save). **Reset all** does the same for every section except Mode, What it checks and Never-ban IPs.
-- Each save keeps a copy of the settings file in `/etc/threat_watch/backup/` and appears in **History** with who changed it. **Undo** there puts the old values back.
+- **Default** on a section fills in the default values (you still press Save). **Reset all** does the same everywhere except modes, what it checks and never-ban IPs.
+- Each save keeps a copy of the settings file (`/etc/threat_watch/backup/`, `/etc/kicks/backup/`) and appears in **History** with who changed it.
 - **Export / Import** copies settings from one server to another. Users and domains are not copied.
-- **Ban an IP now**: ban an IP or a `/24` for a chosen time, with a note. Office and never-ban IPs are refused.
-- **Test a request**: paste a URL to see which rule would catch it. Nothing is banned.
-- **Version and updates**: shows the newest release and its notes; **Update now** asks for your password, keeps your settings and saves the old version for rollback.
+- **Update now** asks for your password, updates every installed tool, keeps settings and saves the old versions for rollback.
 - Licence, allowed IPs, password and the Telegram token can only be changed on the server.
 
 The same settings from the command line:
@@ -270,12 +282,12 @@ threat_watch guard test-url GET /wp-content/uploads/x.php
 | `threat_watch test-ip IP` | show an IP's country |
 | `threat_watch log-source` | which log is read, and whether real IPs show |
 | `threat_watch version` | show the version |
-| `threat_watch update` | update to the newest release (also runs every Sunday) |
+| `threat_watch update` | update to the newest release; also updates kicks if it is installed (every Sunday too if `AUTO_UPDATE="yes"`; new installs: `"no"`) |
 | `threat_watch versions` | list saved versions |
 | `threat_watch rollback [VER]` | go back to the previous or a chosen version |
 | `threat_watch guard status` | guard mode, licence, firewall, log source, active bans (long / short) |
 | `threat_watch guard bans` | who is banned, until when, and their strike |
-| `threat_watch guard unban IP` | remove a ban (also clears that IP's strikes) |
+| `threat_watch guard unban IP` | remove a ban in guard and kicks (also clears that IP's strikes) |
 | `threat_watch guard id` | print this server's licence line |
 | `threat_watch guard disable` | turn guard off |
 | `threat_watch guard telegram TOKEN CHAT_ID` | send guard alerts to Telegram |
